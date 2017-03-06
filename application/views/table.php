@@ -3,9 +3,9 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Tables
+                Reports
                 <small>
-                    Some examples to get you started
+                    Weekly Reports
                 </small>
             </h3>
         </div>

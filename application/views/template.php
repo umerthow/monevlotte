@@ -41,14 +41,91 @@
 
 
 
-
-
-
+    <!-- PNotify -->
+    <link href="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 
 
 
         <!-- Custom Theme Style -->
         <link href="<?php echo base_url(); ?>gentelella/production/css/custom.css" rel="stylesheet">
+
+        <!-- bootstrap combo box -->
+        <link href="<?php echo base_url(); ?>gentelella/vendors/bootstrap-combobox/bootstrap-combobox.css" rel="stylesheet">
+
+
+<!-- jQuery -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/nprogress/nprogress.js"></script>
+
+
+
+
+        <!-- iCheck -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/iCheck/icheck.min.js"></script>
+
+
+          <script src="<?php echo base_url(); ?>gentelella/vendors/skycons/skycons.js"></script>
+        <!-- Flot -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.pie.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.time.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.stack.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.resize.js"></script>
+        <!-- Flot plugins -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/flot.curvedlines/curvedLines.js"></script>
+        <!-- DateJS -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/DateJS/build/date.js"></script>
+        <!-- JQVMap -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/dist/jquery.vmap.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="<?php echo base_url(); ?>gentelella/vendors/moment/min/moment.min.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+
+
+        <!-- Custom Theme Scripts -->
+        <!-- <script src="<?php echo base_url(); ?>gentelella/production/js/custom.js"></script> -->
+         <script src="<?php echo base_url(); ?>gentelella/vendors/validator/validator.js"></script>
+
+
+
+    <!-- Custom Theme Scripts -->
+
+
+
+       <!-- Datatables -->
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+       
+     <!-- bootstrap combo box -->
+      <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap-combobox/bootstrap-combobox.js"></script>
+
+        
     </head>
 
     <body class="nav-md">
@@ -69,7 +146,7 @@
                             </div>
                             <div class="profile_info">
                                 <span>Welcome,</span>
-                                <h2>Pasar Rebo</h2>
+                                <h2><?php echo $this->session->userdata('nama_lengkap');  ?></h2>
                             </div>
                         </div>
                         <!-- /menu profile quick info -->
@@ -89,9 +166,18 @@
                                     
                                 </ul>
                                 </li>
+                                <li><a><i class="fa fa-cog"></i> Admin Management <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><?php echo anchor('welcome/usermng', 'Users'); ?>
+                                        </li>
+                                       
+                                        </li>
+                                    </ul>
+                                </li>
+
                                 <li><a><i class="fa fa-edit"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><?php echo anchor('welcome/weekly_report', 'Weekly Report'); ?> </li>
+                                        <li><?php echo anchor('weekly_reports/index', 'Weekly Report'); ?> </li>
                                         <li><?php echo anchor('welcome/form_advanced', 'Horeka Report'); ?> </li>
                                         
                                     </ul>
@@ -226,7 +312,7 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="">
                                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?php echo base_url(); ?>gentelella/production/images/img.jpg" alt="">Pasar Rebo
+                                        <img src="<?php echo base_url(); ?>gentelella/production/images/img.jpg" alt=""><?php echo $this->session->userdata('nama_lengkap');  ?>
                                         <span class=" fa fa-angle-down"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -241,7 +327,7 @@
                                         <li>
                                             <a href="javascript:;">Help</a>
                                         </li>
-                                        <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                        <li><a href="<?php echo site_url('User/logout') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -335,7 +421,7 @@
                 <!-- footer content -->
                 <footer>
                     <div class="pull-right">
-                       PT. Lotte Shopping Indonesia - powered by <a href="https://codeigniter.org">Codeigniter</a>
+                       PT. Lotte Shopping Indonesia - powered by <a href="https://codeigniter.com">Codeigniter</a>
                     </div>
                     <div class="clearfix"></div>
                 </footer>
@@ -343,71 +429,7 @@
             </div>
         </div>
 
-        <!-- jQuery -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/nprogress/nprogress.js"></script>
 
-
-
-
-        <!-- iCheck -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/iCheck/icheck.min.js"></script>
-
-
-          <script src="<?php echo base_url(); ?>gentelella/vendors/skycons/skycons.js"></script>
-        <!-- Flot -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.pie.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.time.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.stack.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/Flot/jquery.flot.resize.js"></script>
-        <!-- Flot plugins -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/flot.curvedlines/curvedLines.js"></script>
-        <!-- DateJS -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/DateJS/build/date.js"></script>
-        <!-- JQVMap -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/dist/jquery.vmap.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="<?php echo base_url(); ?>gentelella/vendors/moment/min/moment.min.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-
-
-        <!-- Custom Theme Scripts -->
-        <!-- <script src="<?php echo base_url(); ?>gentelella/production/js/custom.js"></script> -->
-         <script src="<?php echo base_url(); ?>gentelella/vendors/validator/validator.js"></script>
-
-
-
-    <!-- Custom Theme Scripts -->
-    <script src="<?php echo base_url(); ?>gentelella/build/js/custom.min.js"></script>
-
-
-       <!-- Datatables -->
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="<?php echo base_url(); ?>gentelella/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 
 <!-- Custom Theme Scripts -->
@@ -419,4 +441,13 @@
     <!-- <script type="text/javascript">
      $("#datatable").dataTable();
      </script> -->
+      <!-- PNotify -->
+    <script src="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+    <script src="<?php echo base_url(); ?>gentelella/build/js/custom.js"></script>
+
+        
+  
 </html>

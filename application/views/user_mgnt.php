@@ -62,6 +62,7 @@ background-color: #9FAFD1;
      <table id="table" class="table table-striped table-bordered compact">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Code</th>
                                 <th>Username</th>
                                 <th>Nama</th>
@@ -72,8 +73,7 @@ background-color: #9FAFD1;
                             </tr>
                         </thead>
 
-                         <tbody>
-            				</tbody>
+                         <tbody></tbody>
                     <!--     <tbody>
 
                         
@@ -173,7 +173,7 @@ var save_method;
 $(document).ready(function() {
 //datatable
 table = $('#table').DataTable({
-	"processing": true, //Feature control the processing indicator.
+	   "processing": true, //Feature control the processing indicator.
     "serverSide": true, //Feature control DataTables' server-side processing mode.
     "order": [], //Initial no order.
 

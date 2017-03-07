@@ -82,6 +82,7 @@ Class User extends CI_Controller {
         foreach ($list as $person) {
             $no++;
             $row = array();
+            $row[] = $no;
             $row[] = $person->code;
             $row[] = $person->username;
             $row[] = $person->nama_lengkap;

@@ -4,12 +4,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Weekly_m extends CI_Model {
 
-	var $table = 'price_cek';
-    var $column_order = array('fg','l1_cd','l1_nm','prod_cd','prod_nm','sale_qty','sale_amt','profit','margin','ctr','stk_qty','stk_camt','stk_samt','buy_prc','sale_prc','rt','scm1','dis1','prc1','rt1','scm2','dis2','prc2','rt2','scm3','dis3','prc3','rt3','limit','ea','uom'); //set column field database for datatable orderable
-    var $column_search = array('prod_cd','prod_nm'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $table = 'price_compare_view';
+    var $column_order = array('id_prod','str_nm','str_cd','l1_cd','l1_nm','prod_cd','prod_nm','sale_qty','sale_amt','profit','stk_qty','stk_camt',
+                                'stk_samt','buy_prc','sale_prc','rt','scm1','dis1','prc1','scm2','dis2','prc2','scm3','dis3',
+                                'prc3','limit','ea','uom','harga_termurah','prc_reg','prc_lv_1','prc_lv_2','prc_lv_3','qty_low','prc_low','index1',
+                                'prc_point','index2','coment','status'); //set column field database for datatable orderable
+    
+    var $column_search = array('str_cd','prod_cd','prod_nm','str_nm','l1_cd','l1_nm'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     var $order = array('prod_cd' => 'desc');
 
 	 private function _get_datatables_weeks_query() {
+
+        if($this->input->post('filter_store'))
+        {
+            $this->db->where('str_cd', $this->input->post('filter_store'));
+        }
+
+        if($this->input->post('filter_kategori'))
+        {
+            $this->db->where('l1_cd', $this->input->post('filter_kategori'));
+        }
+
+        if ($this->session->userdata('level') == '3' ) {
+
+              $this->db->where('str_cd', $this->session->userdata('str_code'));
+
+
+        }
+
          
         $this->db->from($this->table);
  
@@ -81,6 +103,50 @@ class Weekly_m extends CI_Model {
 
 
 	}
+
+    public function get_list_kategori()
+    {
+        $this->db->select('str_cd,str_nm,l1_cd,l1_nm');
+        $this->db->from($this->table);
+
+        if ($this->session->userdata('level') == '3' ) {
+
+              $this->db->where('str_cd', $this->session->userdata('str_code'));
+
+
+        }
+
+        $this->db->order_by('l1_nm','asc');
+        $query = $this->db->get();
+        $result = $query->result();
+ 
+        
+        return $result;
+    }
+
+
+    //--end datatables
+
+    public function update_pricecek($where,$data){
+
+
+        $this->db->update('price_compare', $data, $where);
+        return $this->db->affected_rows();
+    }
+
+
+    public function insert_pricecek($data2){
+        $this->db->insert('price_compare',$data2);
+
+    }
+
+    public function get_by_prod_cd($id){
+         $this->db->from('price_compare_view');
+         $this->db->where('id_prod',$id);
+         $query = $this->db->get();
+     
+         return $query->row();
+    }
 }
 
 ?>

@@ -20,6 +20,13 @@ public function __construct(){
         $this->template->load('template', 'dashboard1');
     }
 
+
+    public function change_password_must(){
+        $data['page_name'] = 'dashboard/passwordbaru';
+        $this->load->view('passwordchange',$data);
+        //$this->template->load('template', 'passwordchange');
+    }
+
     function dashboard1() {
 
     $this->template->load('template', 'dashboard1');

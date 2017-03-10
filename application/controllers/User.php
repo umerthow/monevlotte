@@ -8,7 +8,19 @@ Class User extends CI_Controller {
 
         if ($this->session->userdata('is_login') ){
             
-             redirect('Welcome/dashboard1');
+            
+         if ($this->session->userdata('status') >0  ) {  
+
+                 redirect('Welcome/dashboard1');
+
+
+             } else {
+                
+                redirect('welcome/change_password_must');
+
+             }
+
+
         } else {
 
             $data['page_name'] = 'dashboard/index';
@@ -32,13 +44,17 @@ Class User extends CI_Controller {
             {
                 $data_user = array(
                     'nama_lengkap' => $user->nama_lengkap,
+                    'username' => $user->username,
                     'kode' => $user->code,
                     'alamat' => $user->alamat,
                     'str_code' => $user->store_cd,
+                    'level' => $user->level,
+                    'status' => $user->status,
                     'is_login' => TRUE
                     );
 
             $this->session->set_userdata($data_user);
+
 
             $status = array("STATUS"=>"true"); 
             echo json_encode ($status) ;
@@ -58,9 +74,12 @@ Class User extends CI_Controller {
 
         $data_user = array (
         'nama_lengkap',
+        'username',
         'kode',
         'alamat',
         'str_code',
+        'level',
+        'status',
         'is_login',       
         );
 
@@ -180,6 +199,39 @@ Class User extends CI_Controller {
     public function edit_user($id){
         $data = $this->user_m->get_by_id($id);
         echo json_encode($data);
+    }
+
+
+    public function update_password($id){
+        $pass1 = $this->input->post('password');
+        $pass2 = $this->input->post('password2');
+
+    if($pass2 == $pass1) {
+
+        $data = array(
+          
+            'password' => sha1($pass2),
+            'status'=>1
+
+            );
+
+        $update =  $this->user_m->update_data_user(array('noid' => $id), $data);  
+
+         if($update) {
+
+         $status = array("STATUS"=>"true"); 
+         echo json_encode ($status) ;
+        
+        }  
+    } else {
+
+         $status = array("STATUS"=>"false"); 
+            echo json_encode ($status);
+
+    }
+
+
+
     }
 
 

@@ -48,6 +48,7 @@ class User_m extends CI_Model {
 		
 			$this->forum->select('*');
 			$this->forum->from('employee');
+			$this->forum->where('str_cd','NOT LIKE "04%" ');
 			$this->forum->order_by('emp_no','desc');
 			return $this->forum->get()->result();
 
@@ -66,9 +67,9 @@ class User_m extends CI_Model {
 	}
 
 
-	public function update_data_user($where,$data){
+	public function update_data_user($id,$data){
 
-		 $this->db->update($this->table, $data, $where);
+		 $this->db->update($this->table, $data, $id);
 		  return $this->db->affected_rows();
 	}
 

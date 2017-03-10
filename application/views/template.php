@@ -173,6 +173,7 @@
                                     
                                 </ul>
                                 </li>
+                                <?php if ($this->session->userdata('level') == '1' ) {  ?>        
                                 <li><a><i class="fa fa-cog"></i> Admin Management <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('welcome/usermng', 'Users'); ?>
@@ -181,6 +182,8 @@
                                         </li>
                                     </ul>
                                 </li>
+
+                                <?php } ?>
 
                                 <li><a><i class="fa fa-edit"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">

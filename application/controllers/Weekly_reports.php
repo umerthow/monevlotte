@@ -2,7 +2,18 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 Class Weekly_reports extends CI_Controller {
+public function __construct(){
 
+   parent:: __construct(); 
+    
+    if (! $this->session->userdata('is_login')){
+            
+             redirect('user/login');
+             //echo site_url('dashboard/page_down')
+        }
+    
+
+}
 
 
    public function cek(){
@@ -45,44 +56,45 @@ Class Weekly_reports extends CI_Controller {
             $row[] = $no;
             $row[] = $reports->id_prod;
             $row[] = $reports->str_nm;
-            $row[] = $reports->str_cd;
+           
             $row[] = $reports->l1_nm;
             $row[] = $reports->prod_cd;
             $row[] = $reports->prod_nm;
+            $row[] = $reports->str_cd;
             $row[] = $reports->sale_qty;
-            $row[] = number_format($reports->sale_amt,2,',','.');
+            $row[] = number_format($reports->sale_amt,2,',',',');
             $row[] = $reports->profit;
     
             $row[] = $reports->stk_qty;
-            $row[] = number_format($reports->stk_camt,0,',','.');
+            $row[] = number_format($reports->stk_camt,0,',',',');
             $row[] = number_format($reports->stk_samt,0,',','.');
-            $row[] = number_format($reports->buy_prc,0,',','.');
-            $row[] = number_format($reports->sale_prc,0,',','.');
+            $row[] = number_format($reports->buy_prc,0,',',',');
+            $row[] = number_format($reports->sale_prc,0,',',',');
             $row[] = $reports->rt;
             $row[] = $reports->scm1;
             $row[] = $reports->dis1;
-            $row[] =  number_format($reports->prc1,0,',','.');
+            $row[] =  number_format($reports->prc1,0,',',',');
  
             $row[] = $reports->scm2;
             $row[] = $reports->dis2;
-            $row[] = number_format($reports->prc2,0,',','.');
+            $row[] = number_format($reports->prc2,0,',',',');
   
             $row[] = $reports->scm3;
             $row[] = $reports->dis3;
-            $row[] =number_format($reports->prc3,0,',','.');
+            $row[] =number_format($reports->prc3,0,',',',');
   
             $row[] = $reports->limit;
             $row[] = $reports->ea;
             $row[] = $reports->uom;
-            $row[] = number_format($reports->harga_termurah,0,',','.');
-            $row[] = number_format($reports->prc_reg,0,',','.');
-            $row[] = number_format($reports->prc_lv_1,0,',','.');
-            $row[] = number_format($reports->prc_lv_2,0,',','.');
-            $row[] = number_format($reports->prc_lv_3,0,',','.');
+            $row[] = number_format($reports->harga_termurah,0,',',',');
+            $row[] = number_format($reports->prc_reg,0,',',',');
+            $row[] = number_format($reports->prc_lv_1,0,',',',');
+            $row[] = number_format($reports->prc_lv_2,0,',',',');
+            $row[] = number_format($reports->prc_lv_3,0,',',',');
             $row[] = $reports->qty_low;
-            $row[] = number_format($reports->prc_low,0,',','.');
+            $row[] = number_format($reports->prc_low,0,',',',');
             $row[] = round($reports->index1).'%'; 
-            $row[] = number_format($reports->prc_point,0,',','.');
+            $row[] = number_format($reports->prc_point,0,',',',');
             $row[] = round($reports->index2).'%'; 
             $row[] = $reports->coment;
             $row[] = $reports->status;
@@ -214,6 +226,108 @@ Class Weekly_reports extends CI_Controller {
    public function cek_ajaxnya(){
 
    }
+
+
+   public function uploadpricecek(){
+    date_default_timezone_set('Asia/Jakarta');      //Don't forget this..I had used this..just didn't mention it in the post
+    $datetime_variable = new DateTime();
+    $datetime_formatted = date_format($datetime_variable, 'Y-m-d H:i:s');
+    $namagroup['nama_group'] = $this->input->post('groupname');
+    $namagroup['date'] =$datetime_formatted;
+
+
+ $this->form_validation->set_rules('groupname','groupname','required');
+ if($this->form_validation->run() == FALSE ){
+      $data['page_name']= 'sms/tambahgroup';
+      $this->load->view('main_layout',$data);
+    
+    }else {   
+          $this->sms_m->insertgroup($namagroup);
+          $config['upload_path'] = './temp_file/';
+          $config['allowed_types'] = 'xls|xlsx';
+          $config['max_size'] = '5000';//2mb
+          $config['file_name'] = 'kontak.xls';
+          $config['overwrite'] = true;
+          $this->load->library('upload', $config);
+          $this->upload->initialize($config);
+          $this->load->library('excel');
+
+          if(!$this->upload->do_upload('attachkontak'))
+          {
+            $error = array('error' => $this->upload->display_errors());
+                    //$this->test_excel($error);
+                    $result = array(
+                      'isSuccess' => false,
+                      'message' => $this->upload->display_errors('', '')
+                   );
+
+            //
+          
+          }else {
+             $inputFileName = './temp_file/kontak.xls';
+             $objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
+             $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+             $settingParameter = $this->sms_m->ambil_group()->row();
+
+             if(!empty($sheetData)){
+              $kontakData = array();
+              foreach ($sheetData as $rowNo => $row) {
+
+
+              $nomor = str_replace("+62", "0", $row["B"]);
+              $nomor = str_replace("'", "", $row["B"]);
+              $nomor = str_replace("(", "", $row["B"]);
+              $nomor = str_replace(")", "", $row["B"]);
+              $nomor = str_replace(".", "", $row["B"]);
+              $nomor = str_replace(" ", "", $row["B"]);
+              if(!preg_match('/[^+0-9]/',trim($row["B"]))){
+                        // cek apakah no hp karakter 1-3 adalah +62
+                          if(substr(trim($nomor), 0, 3)=='+62'){
+                            $nomor = trim($nomor);
+                        }
+                        // cek apakah no hp karakter 1 adalah 0
+                        else if(substr(trim($nomor), 0, 1)=='0'){
+                            $nomor = '+62'.substr(trim($nomor), 1);
+                        }
+                          // cek apakah no hp karakter 1 adalah 8
+                         else if(substr(trim($nomor), 0, 1)=='8'){
+                            $nomor = '+62'.substr(trim($nomor), 0);
+                        }
+
+                          else if(substr(trim($nomor), 0, 2)=='62'){
+                            $nomor = '+'.substr(trim($nomor), 0);
+                        }
+
+
+
+
+                        $nomor = substr_replace($nomor,'0',0,3); 
+                         
+                    }
+
+
+              //$nomor = substr_replace($nomor,'0',0,3);  
+
+             if($rowNo == 1) continue;
+              $temp = array(
+                  "idgroup" => $settingParameter->id_group,
+                  // "nama" => $row["D"],
+                  "nama" => $row["A"],
+                  "kontak" => $nomor,
+                );      
+               $kontakData[] = $temp;
+             }
+            
+              if ($this->sms_m->import_kontak($kontakData)) {
+                              $this->session->set_flashdata('berhasil', ' Data Group SMS  berhasil diupload');
+                  redirect('sms_gateway/smsblast');
+                          }
+          }
+
+    }
+}
+
+}
 
    }
 

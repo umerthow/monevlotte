@@ -12,7 +12,7 @@
     <link href="<?php echo base_url(); ?>gentelella/vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="<?php echo base_url(); ?>gentelella/build/css/custom.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>gentelella/build/css/custom.css" rel="stylesheet">
 
  <!-- PNotify -->
     <link href="<?php echo base_url(); ?>gentelella/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
@@ -23,30 +23,41 @@
 
 
 </head>
+<div class="col-md-4"></div>
+<div class="col-md-4">
+ 
+<div class="col-md-4"></div>
 
 
-
-
-  <body class="login">
+  <body class="login ">
     <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
+  
 
       <div class="login_wrapper">
+  
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+            <form action="javascript:void(0)" id="form_login" class="login input_mask">
               <h1>MONEV SISTEM</h1>
               <p class="form-group" id="demo2"> </p>
-              <div>
-                <input type="text" name="username" id ="user" class="form-control" placeholder="Username" required="" />
+
+              
+
+                <div class="col-xs-12 form-group has-feedback">
+                <input type="text" name="username" id ="user" class="form-control  has-feedback-left" placeholder="Username" required="" />
+                <span class="fa fa-user form-control-feedback left" aria-hidden="false"></span>
+
               </div>
-              <div>
-                <input type="password" name="password" id="pass" class="form-control" placeholder="Password" required="" />
+             <div class=" col-xs-12 form-group has-feedback">
+                <input type="password" name="password" id="pass" class="form-control has-feedback-left" placeholder="Password" required="" />
+               <span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
               </div>
-              <div>
-                <a class="btn btn-default submit" >Log in</a>
-                <a class="reset_pass" href="#">Lost your password?</a>
+
+               <div class=" col-xs-12 form-group has-feedback">
+                 <button type="submit" class="btn btn-danger submit-register" >Log In</button>
+                <a class="reset_pass to_lostpassword" href="#" onclick="lostpassword()">Lost your password?</a>
                 
               </div>
 
@@ -61,16 +72,28 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> LOTTE</h1>
-                  <p>©2016 All Rights Reserved. Privacy and Terms</p>
+                  <h1> LOTTE SHOPPING INDONESIA</h1>
+                  <p>©2017 All Rights Reserved. Privacy and Terms</p>
+
+
                 </div>
               </div>
             </form>
           </section>
         </div>
 
+
+    
+
         <div id="register" class="animate form registration_form">
-          <section class="login_content">
+        <section class="login_content">
+        <p>You no need to Register</p>
+           <div class="clearfix"></div>
+            <p class="change_link">Already a member ?
+                  <a href="#signin" class="to_register"> Log in </a>
+                </p>
+        </section>
+         <!--  <section class="login_content">
             <form>
               <h1>Create Account</h1>
               <div>
@@ -83,7 +106,7 @@
                 <input type="password" class="form-control" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+                <button type="button" class="btn btn-default submit-register" >Submit</button>
               </div>
 
               <div class="clearfix"></div>
@@ -97,17 +120,18 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                  <h1><i class="fa fa-paw"></i> LOTTE</h1>
+                  <p>©2016 All Rights Reserved. LOTTE SHOPPING INDONES. Privacy and Terms</p>
                 </div>
+
               </div>
             </form>
-          </section>
+          </section> -->
         </div>
       </div>
     </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="myaprv">
+<div class="modal fade" tabindex="-1" role="dialog" id="lostpass">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -116,8 +140,9 @@
       </div>
   
       <div class="modal-body">
-      <p id="notifikasi"></p>
-       
+      <p id="notifikasi">Mohon maaf, untuk user yang mengalami lupa password saat ini mohon untuk menghubungi administrator COMM DF atau email ke : ahmad.umar@lottemart.co.id</p>
+      
+      <br/><p>Thank's</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -150,8 +175,7 @@
 
 
 <script type="text/javascript">
-
- $(document).on("click", ".submit", function () {
+$('form.login').on('submit', function () {
 
   var username = $('#user').val();
   var pass = $('#pass').val();
@@ -195,7 +219,7 @@ if($empty1.length || $empty2.length) {
                          beforeSend: function(){
                          $('#myaprv').modal('hide');
                          $('#demo2').html("Loading...");
-                         $('#demo2').html("<img height='20px' width='20px' src='<?php echo base_url()?>/assets/4.gif' /> Loading..");
+                         $('#demo2').html("<img height='20px' width='20px' src='<?php echo base_url()?>/assets/default.gif' /> Loading..");
                           },
                            success:  function(json){      
                            try{  
@@ -243,3 +267,12 @@ if($empty1.length || $empty2.length) {
 
 </script>
 
+
+<script>
+  function lostpassword(){
+
+    $('#lostpass').modal('show');
+    $('.modal-title').text('Sorry')
+    //alert('Mohon maaf, untuk user yang mengalami lupa password saat ini mohon untuk menghubungi administrator atau email ke : ahmad.umar@lottemart.co.id');
+  }
+</script>

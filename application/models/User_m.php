@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User_m extends CI_Model {
 
 	var $table = 'tuser';
-    var $column_order = array('code','username','nama_lengkap','level','last_visit','last_logut','Action'); //set column field database for datatable orderable
+    var $column_order = array('code','username','nama_lengkap','level','alamat','last_login','last_logout','ip','Action'); //set column field database for datatable orderable
     var $column_search = array('code','username','nama_lengkap'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     var $order = array('noid' => 'desc');
 
@@ -71,6 +71,12 @@ class User_m extends CI_Model {
 
 		 $this->db->update($this->table, $data, $id);
 		  return $this->db->affected_rows();
+	}
+
+	public function update_pass_user($id,$data){
+	 		$this->db->update($this->table, $data, $id);
+	return  $this->db->affected_rows();
+
 	}
 
 

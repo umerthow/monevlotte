@@ -6,7 +6,7 @@ class Welcome extends CI_Controller {
 public function __construct(){
     parent:: __construct(); 
     
-    if (! $this->session->userdata('is_login') ){
+    if (! $this->session->userdata('is_login')){
             
              redirect('user/login');
              //echo site_url('dashboard/page_down')
@@ -23,8 +23,21 @@ public function __construct(){
 
     public function change_password_must(){
         $data['page_name'] = 'dashboard/passwordbaru';
-        $this->load->view('passwordchange',$data);
+
+         if (! $this->session->userdata('status')== '1'){
+            $this->load->view('passwordchange',$data);
+        } else {
+
+            $this->index();
+
+        }
         //$this->template->load('template', 'passwordchange');
+    }
+
+    public function ubah_password(){
+
+         $this->template->load('template', 'ubah_password');
+
     }
 
     function dashboard1() {

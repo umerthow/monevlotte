@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Meta, title, CSS, favicons, etc. -->
@@ -26,7 +26,7 @@
     <!-- JQVMap -->
     <link href="<?php echo base_url(); ?>gentelella/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
-    <link href="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/bootstrap-datetimepicker.css" rel="stylesheet">
 
  
     <!-- bootstrap-daterangepicker -->
@@ -43,6 +43,8 @@
     <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!-- Dropzone.js -->
+    <link href="<?php echo base_url(); ?>gentelella/vendors/dropzone/dist/dropzone.css" rel="stylesheet">
 
 
     <!-- PNotify -->
@@ -94,7 +96,7 @@
         <script src="<?php echo base_url(); ?>gentelella/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
         <!-- bootstrap-daterangepicker -->
         <script src="<?php echo base_url(); ?>gentelella/vendors/moment/min/moment.min.js"></script>
-        <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/bootstrap-datetimepicker.js"></script>
 
 
 
@@ -127,6 +129,7 @@
     <script src="<?php echo base_url(); ?>gentelella/vendors/jszip/dist/jszip.min.js"></script>
     <script src="<?php echo base_url(); ?>gentelella/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="<?php echo base_url(); ?>gentelella/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="<?php echo base_url(); ?>gentelella//vendors/dropzone/dist/dropzone.js"></script>
 
        
      <!-- bootstrap combo box -->
@@ -135,13 +138,13 @@
         
     </head>
 
-    <body class="nav-md">
-        <div class="container body">
+    <body class="nav-md ">
+        <div class="container body ">
             <div class="main_container">
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>LOTTE</span></a>
+                            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>LOTTE LSI</span></a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -149,7 +152,7 @@
                         <!-- menu profile quick info -->
                         <div class="profile">
                             <div class="profile_pic">
-                                <img src="<?php echo base_url(); ?>gentelella/production/images/img.jpg" alt="..." class="img-circle profile_img">
+                                <img src="<?php echo base_url(); ?>gentelella/production/images/lottewholesale.png" alt="..." class="img-circle profile_img">
                             </div>
                             <div class="profile_info">
                                 <span>Welcome,</span>
@@ -185,9 +188,9 @@
 
                                 <?php } ?>
 
-                                <li><a><i class="fa fa-edit"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-book"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><?php echo anchor('weekly_reports/index', 'Weekly Report'); ?> </li>
+                                        <li><?php echo anchor('weekly_reports/index', 'Price Cek'); ?> </li>
                                         <li><?php echo anchor('welcome/form_advanced', 'Horeka Report'); ?> </li>
                                         
                                     </ul>
@@ -214,10 +217,18 @@
                                         </li>
                                     </ul>
                                 </li> -->
+                                 <li><a><i class="fa fa-edit"></i> Event <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><?php echo anchor('event/all_event', 'Semua Event'); ?> </li>
+                                        <li><?php echo anchor('event/create_event', 'Buat Event'); ?> </li>
+                                        
+                                    </ul>
+                                </li>
                                 <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('welcome/table', 'Table'); ?> </li>
                                         <li><?php echo anchor('welcome/table_dynamic', 'Table Dynamic'); ?> </li>
+                                        <li><?php echo anchor('welcome/form_upload', 'Form upload'); ?> </li>
                                     </ul>
                                 </li>
                                 <!-- <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
@@ -302,7 +313,7 @@
                             <a data-toggle="tooltip" data-placement="top" title="Lock">
                                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                             </a>
-                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                            <a  href="<?php echo site_url('User/logout') ?>" data-toggle="tooltip" data-placement="top" title="Logout">
                                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                             </a>
                         </div>
@@ -322,17 +333,13 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="">
                                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?php echo base_url(); ?>gentelella/production/images/img.jpg" alt=""><?php echo $this->session->userdata('nama_lengkap');  ?>
+                                        <img src="<?php echo base_url(); ?>gentelella/production/images/lottewholesale.png" alt=""><?php echo $this->session->userdata('nama_lengkap');  ?>
                                         <span class=" fa fa-angle-down"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                        <li><a href="javascript:;">  Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <span class="badge bg-red pull-right">50%</span>
-                                                <span>Settings</span>
-                                            </a>
+                                       
+                                       
+                                        <li><a href="<?php echo site_url('Welcome/ubah_password') ?>"><i class="fa fa-lock pull-right"></i> Ubah Password</a>    
                                         </li>
                                         <li>
                                             <a href="javascript:;">Help</a>

@@ -127,7 +127,7 @@ Class User extends CI_Controller {
 
 
             
-            $row[] = $person->last_visit;
+            $row[] = $person->last_login;
  			$row[] = $person->last_logout;
             //add html for action
             $row[] = '<a class="btn btn-sm btn-primary btn-xs" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$person->noid."'".')"><i class="glyphicon glyphicon-pencil"></i> </a>
@@ -230,6 +230,46 @@ Class User extends CI_Controller {
 
     }
 
+
+
+    }
+
+
+    public function change_pass($id){
+        date_default_timezone_set('Asia/Jakarta');      //Don't forget this..I had used this..just didn't mention it in the post
+        $datetime_variable = new DateTime();
+        $datetime_formatted = date_format($datetime_variable, 'Y-m-d H:i:s');
+
+        $pass1 = $this->input->post('password');
+        $pass2 = $this->input->post('password2');
+
+         if($pass2 == $pass1) {
+
+                $data = array(
+                    
+                   
+                    'password' => sha1($pass2),
+                    'alamat' => $this->input->post('alamat'),
+                    'ip' => $_SERVER['REMOTE_ADDR'],
+                    'createdDate' => $datetime_formatted,
+                    'status'=>1
+
+                    );
+
+                $update =  $this->user_m->update_pass_user(array('code' => $id), $data);  
+
+                 if($update) {
+
+                 $status = array("STATUS"=>"true"); 
+                 echo json_encode ($status) ;
+                
+                }  
+            } else {
+
+                 $status = array("STATUS"=>"false"); 
+                    echo json_encode ($status);
+
+            }
 
 
     }

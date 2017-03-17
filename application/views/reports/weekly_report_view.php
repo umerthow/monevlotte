@@ -1,4 +1,9 @@
 <style type="text/css">
+
+.dropzone {
+  margin-top: 100px;
+  border: 2px dashed #0087F7;
+}
 table a:link {
 	color: #666;
 	font-weight: bold;
@@ -103,36 +108,35 @@ table tr:hover td {
 
     <div class="page-title">
     
-
+<div id="example_wrapper"></div>
         
     </div>
      <div class="clearfix"></div>
       <div class="row">
-         <div class="col-md-12">
-             <div class="x_panel">
+         
 
-                <div class="x_title">
-                    <h2>Weekly reports <small> --/--</small></h2><br/>
-                   
+            <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Price Cek Report <small>--/--</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-print"></i> <small>Cetak</small> </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" id="export_excel_this"><span class="fa fa-file-excel-o"></span> Excel</a>
-                                </li>
-                                <li><a href="#"> <span class="fa fa-file-pdf-o"></span> Pdf</a>
-                                </li>
-                              
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="<?php echo  base_url()?>arsip/petunjukpricecek.pdf" target="_blank">Panduan Pengisian</a>
+                          </li>
+                          <li><a href="javascript:void(0)" id="foruploadexcel">Upload by Excel</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
                     </ul>
                     <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
+                  </div>
+                  <div class="x_content">
+
                 <div class="row">
            
                 <form class="form-horizontal form-label-left" id="formfilter">
@@ -168,10 +172,11 @@ table tr:hover td {
                           <th bgcolor="#FFFFFF"  class=" info text-center" rowspan="2">#</th>
                           <th class="info text-center" rowspan="2">id</th>
                           <th class="info text-center" rowspan="2">Store</th>
-                          <th class="info text-center" rowspan="2">Str cd</th>
+                        
                           <th class="info text-center " rowspan="2">L1_name</th>
-                          <th class="text-center" rowspan="2">Prod_cd</th>
-                          <th class="text-center" rowspan="2">Prod_nm</th>
+                          <th class="info text-center" rowspan="2">Prod_cd</th>
+                          <th class="info text-center" rowspan="2">Prod_nm</th>
+                         <th class="text-center" rowspan="2">Str cd</th>
                           <th class="info text-center"  rowspan="2">sale_qty</th>
         				          <th class="info text-center" rowspan="2" >sale_amt</th>
         				          <th class="info text-center"  rowspan="2">profit</th>
@@ -224,18 +229,46 @@ table tr:hover td {
      </table>
 
                 </div>
-            </div>
-<div class="pull-right">
-<i id="disini"></i>
+                <div class="pull-right">
+                <i id="disini"></i>
+                </div>
+
 </div>
 
 
-         </div>
+       
       </div>
 
-<p>This is a paragraph.</p>
-<button class="btn1">Hide</button>
-<button class="btn2">Show</button>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modalupload" data-backdrop="static" data-keyboard="false" style="color:#000000">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel">Upload Price Cek by file excel</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4>Petunjuk :</h4>
+                          <ol>
+                              <li>Pastikan file excel berextensi <b>*.xls</b>. Template dapat diunduh <a href=" ">di sini.</a></li>
+                              <li>Isi template dengan data Anda dan upload pada form dibawah.</li>
+                              <li>Kolom header harus sesuai dengan template dan pastikan mengecek data kembali setelah upload file berhasil.</li>
+                          </ol>
+
+                         <form action="#" class="dropzone col-md-3"></form>
+          
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
 
 
 <div class="modal fade bs-example-modal" tabindex="-1" role="dialog" aria-hidden="true" id="price_option">
@@ -362,17 +395,20 @@ table = $('#table1').DataTable({
             }
         },
 
-
-    "dom": 'l<"#pindah"B>frtip',
+    "dom": 'l<"#pindah"B>frtip',     
+    //"dom": 'lBfrtip',
 
     "pageLength": 15,
     "aLengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+
+ 
 
      buttons: [
         {
             extend: 'excel',
             text: '<span class="fa fa-file-excel-o"></span> Excel Export',
             className : 'btn btn-warning btn-xs',
+            title: 'Price Cek LSI',
             exportOptions: {
          <?php if ($this->session->userdata('level') == '1' || $this->session->userdata('level') == '2' ) {  ?>  
          
@@ -388,9 +424,10 @@ table = $('#table1').DataTable({
         },
         {
 
-          extend :'pdfHtml5',
-          text : '<span class="fa fa-file-pdf-o"></span> Export pdf',
+          extend :'csv',
+          text : '<span class="fa fa-file-o"></span> Export csv',
            className : 'btn btn-warning btn-xs',
+           title: 'Price Cek LSI - *',
           exportOption :{
 
             modifier:{
@@ -412,7 +449,7 @@ table = $('#table1').DataTable({
             "orderable": false, //set not orderable
         },
          { 
-            "targets": [ 1,2,4 ], //last column
+            "targets": [ 1,2,3 ], //last column
             "visible": false, //set not orderable
         },
         ], 
@@ -426,7 +463,7 @@ table = $('#table1').DataTable({
                "orderable": false, //set not orderable
         },
             {
-                "targets": [ 1,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 ],
+                "targets": [ 1,2,3,7,8,9,10,11,12,13,14,15,16,17,18,19,20 ],
                 "visible": false
                
             },
@@ -450,7 +487,7 @@ table = $('#table1').DataTable({
     "sScrollX": true,
     "sScrollXInner": "160%",
     fixedColumns:   {
-            leftColumns: 6
+            leftColumns: 7
         }
 
     });
@@ -536,17 +573,19 @@ $('#table1 tbody').on('dblclick', 'tr', function () {
 
 	 				
 	 			}catch(e) {  
-                 	$('#str_cd').val();
-                 	$('#prod_x').val();
-	 				$('#str_nm').val();
-                   	$("#reg_price").val();
-			 		$("#prc_lv1").val();
-			 		$("#prc_lv2").val();
-			 		$("#prc_lv3").val();	
-			 		$("#qty_lower").val();
-			 		$("#prc_lower").val();
-			 		$("#prc_point").val();
-          $("#comment").val();
+                    $('#str_cd').val();
+                    $('#prod_x').val();
+          	 				$('#str_nm').val();
+                    $("#reg_price").val();
+          			 		$("#prc_lv1").val();
+          			 		$("#prc_lv2").val();
+          			 		$("#prc_lv3").val();	
+          			 		$("#qty_lower").val();
+          			 		$("#prc_lower").val();
+          			 		$("#prc_point").val();
+                    $("#comment").val();
+
+          
 	 				 alert('Error get data from ajax');
                   
                   }  
@@ -679,4 +718,23 @@ var content = document.getElementById("disini");
 
   });
 
+</script>
+
+<script type="text/javascript">
+
+$('#foruploadexcel').on('click', function(e) {
+    $('#modalupload').modal('show');
+
+
+      Dropzone.options.myAwesomeDropzone = {
+      paramName: "file", // The name that will be used to transfer the file
+      maxFilesize: 2, // MB
+      accept: function(file, done) {
+        if (file.name == "template_store_upload.xls") {
+          done("Naha, you don't.");
+        }
+        else { done(); }
+      }
+    };
+  });
 </script>

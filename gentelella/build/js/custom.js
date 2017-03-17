@@ -1835,17 +1835,17 @@ if (typeof NProgress != 'undefined') {
 	   
 	  	/* PNotify */
 			
-		// function init_PNotify() {
+		// 	function init_PNotify() {
 			
 		// 	if( typeof (PNotify) === 'undefined'){ return; }
 		// 	console.log('init_PNotify');
 			
 		// 	new PNotify({
-		// 	  title: "Welcome",
+		// 	  title: "PNotify",
 		// 	  type: "info",
-		// 	  text: "Selamat datang User",
+		// 	  text: "Welcome. Try hovering over me. You can click things behind me, because I'm non-blocking.",
 		// 	  nonblock: {
-		// 		  nonblock: false
+		// 		  nonblock: true
 		// 	  },
 		// 	  addclass: 'dark',
 		// 	  styling: 'bootstrap3',
@@ -5054,14 +5054,15 @@ if (typeof NProgress != 'undefined') {
 		init_DataTables();
 		init_chart_doughnut();
 		init_gauge();
-		init_PNotify();
+		//init_PNotify();
 		init_starrr();
 		init_calendar();
 		init_compose();
 		init_CustomNotification();
 		init_autosize();
 		init_autocomplete();
-				
+		
+		console.log('--- HELLO DEVELOPERS ---');		
 	});	
 	
 

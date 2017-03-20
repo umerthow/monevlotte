@@ -231,6 +231,13 @@ public function proc_updateevent(){
 
 }
 
+public function ajax_delete($id){
+
+     $this->event_m->delete_by_id($id);
+    echo json_encode(array("status" => TRUE));
+
+}
+
 }
 
 

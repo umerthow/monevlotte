@@ -141,8 +141,8 @@ class Weekly_m extends CI_Model {
     }
 
     public function get_by_prod_cd($id){
-         $this->db->from('tevent');
-         $this->db->where('id_evt',$id);
+         $this->db->from($this->table);
+         $this->db->where('id_prod',$id);
          $query = $this->db->get();
      
          return $query->row();

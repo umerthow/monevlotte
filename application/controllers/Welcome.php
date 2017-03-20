@@ -42,7 +42,15 @@ public function __construct(){
 
     function dashboard1() {
 
-    $this->template->load('template', 'dashboard1');
+    if ($this->session->userdata('status') <1  ) { 
+
+                 redirect('welcome/change_password_must');
+    } else {
+
+        $this->template->load('template', 'dashboard1');
+    }
+
+    
         
     }
 

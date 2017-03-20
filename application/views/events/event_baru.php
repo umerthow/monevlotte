@@ -205,7 +205,7 @@ var storeshow = $('#storeshow');
                      
                      
 
-                          storeshow.append("<input type='checkbox' name='options[][str_cd]' id='str_cd' value="+ value.str_cd+" class='flat' />" + value.str_nm + "" );
+                          storeshow.append("<input type='checkbox' name='options[][str_cd]' id='str_cd' value="+ value.str_cd+" class='flat' style='padding:10px' />" + value.str_nm + "" );
                      
 
                        storeshow.append('<br/>');
@@ -276,5 +276,11 @@ var storeshow = $('#storeshow');
         maxView: 1,
         forceParse: 0
     });
+
+
+function reload_table()
+{
+    table.ajax.reload(null,false); //reload datatable ajax 
+}
 
 </script>

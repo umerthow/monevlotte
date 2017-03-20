@@ -201,6 +201,7 @@
 
 
                             <div class="modal-footer">
+                          <button type="button" class="btn btn-danger pull-left btn-delete" >Delete</button>  
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           <button type="submit" class="btn btn-primary btn-process">Save changes</button>
                         </div>
@@ -239,6 +240,12 @@ table = $('#table_event').DataTable({
                 "targets": [ 1 ],
                 "visible": false
             },
+            {
+               "targets": [ 0 ], //last column
+               "orderable": false, //set not orderable
+
+            },
+
    ],
 
   "sScrollX": true,
@@ -254,6 +261,15 @@ table = $('#table_event').DataTable({
     })
 
 </script>
+
+<script>
+
+function reload_table()
+{
+    table.ajax.reload(null,false); //reload datatable ajax 
+}
+</script>
+
 
 <script>
 $('#table_event tbody').on('dblclick', 'tr', function () {
@@ -421,4 +437,42 @@ $('#event_edit').on('click', '.btn-process', function(e) {
 
   });
 
+</script>
+
+<script>
+$('#event_edit').on('click', '.btn-delete', function(e) {
+
+var kodex = $('#evt_code').val();
+
+  if(confirm('Are you sure delete this data?'))
+    {
+         
+          $.ajax({
+            url : "<?php echo  base_url()?>event/ajax_delete/"+kodex,
+            type: "POST",
+            dataType: "JSON",
+            success: function(data)
+            {
+                //if success reload ajax table
+             PNotify.prototype.options.styling = "bootstrap3";
+              new PNotify({
+              title: 'Notification',
+              text: 'Sukses Delete This Data.',
+              type: 'success',
+              stack: {"dir1":"down", "dir2":"right", "push":"top"},
+              });  
+
+               $('#event_edit').modal('hide');
+               $('#form_event_ops')[0].reset();
+                reload_table();
+
+            }, error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+
+
+        });
+    }
+  });
 </script>

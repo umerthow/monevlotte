@@ -240,10 +240,11 @@ if($empty1.length || $empty2.length) {
                                 title: 'Login Failed!',
                                 text: 'Mohon Cek Username dan Password Anda.',
                                 type: 'error',
-                                stack: {"dir1":"down", "dir2":"right", "push":"top"},
-                                hide: false
+                                stack: {"dir1":"top", "dir2":"left", "push":"top"},
+                            
                               });
-                                   $('#demo2').html('<p>Failed</p>');
+                                   $('#demo2').html('<p>Failed to Verification</p>');
+
                                 }
                            }catch(e) {  
                              alert('Exception while request..');

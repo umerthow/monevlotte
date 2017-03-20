@@ -542,32 +542,31 @@ $('#table1 tbody').on('dblclick', 'tr', function () {
 	 		dataType: 'JSON',
 	 	
 	 		success: function(data){
-	 		$('#str_cd').val(data.str_cd);
-	 		$('#prod_x').val(data.prod_cd);
-	 		$('#str_nm').val(data.str_nm);
-	 		$("#reg_price").val(data.prc_reg);
-	 		$("#prc_lv1").val(data.prc_lv_1);
-	 		$("#prc_lv2").val(data.prc_lv_2);
-	 		$("#prc_lv3").val(data.prc_lv_3);	
-	 		$("#qty_lower").val(data.qty_low);
-	 		$("#prc_lower").val(data.prc_low);
-	 		$("#prc_point").val(data.prc_point);
-      $("#comment").val(data.coment);
 
-	 		  var obj = jQuery.parseJSON(data);
-              var a = obj['STATUS'];
+
+	 		 
 	 			try{  
-	 				$('#str_cd').val(data.str_cd);
-	 				$('#prod_x').val(data.prod_cd);
-	 				$('#str_nm').val(data.str_nm);
-	 				$("#reg_price").val(data.prc_reg);
-			 		$("#prc_lv1").val(data.prc_lv_1);
-			 		$("#prc_lv2").val(data.prc_lv_2);
-			 		$("#prc_lv3").val(data.prc_lv_3);	
-			 		$("#qty_lower").val(data.qty_low);
-			 		$("#prc_lower").val(data.prc_low);
-			 		$("#prc_point").val(data.prc_point);
-          $("#comment").val(data.coment);
+
+          if(data.length == 0  ) {
+
+                alert('Error get data from ajax ');    
+
+
+          } else {
+              
+              
+                  $('#str_cd').val(data.str_cd);
+                  $('#prod_x').val(data.prod_cd);
+                  $('#str_nm').val(data.str_nm);
+                  $("#reg_price").val(data.prc_reg);
+                  $("#prc_lv1").val(data.prc_lv_1);
+                  $("#prc_lv2").val(data.prc_lv_2);
+                  $("#prc_lv3").val(data.prc_lv_3); 
+                  $("#qty_lower").val(data.qty_low);
+                  $("#prc_lower").val(data.prc_low);
+                  $("#prc_point").val(data.prc_point);
+                  $("#comment").val(data.coment);
+          }
 	 				
 	 
 

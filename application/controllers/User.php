@@ -3,6 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 Class User extends CI_Controller {
+
+    // function __construct(){
+    //     parent::__construct();
+    //     if($this->uri->segment(2)!="logout"){
+    //         redirect('user/login');
+    //     }
+    // }
+
  
  public function login() {
 
@@ -37,6 +45,10 @@ Class User extends CI_Controller {
 
          $user    =  $_POST['username'];
          $pass    =  $_POST['password'];
+         
+         if(($user=='')||($pass=='')){
+                redirect('user/login');
+            }
 
          $user= $this->user_m->get_by_username_password($user,$pass);
 

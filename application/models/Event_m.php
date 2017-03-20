@@ -5,9 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Event_m extends CI_Model {
 
 	var $table = 'tview_events';
-	var $column_order = array('prod_cd','prod_nm','ven_cd','str_cd','nama_event','detail_event','start_date','finish_date'); //set column field database for datatable orderable
+	var $column_order = array('id_evt','11_cd','prod_cd','prod_nm','ven_cd','str_cd','nama_event','detail_event','start_date','finish_date'); //set column field database for datatable orderable
 	var $column_search = array('prod_cd','prod_nm','ven_cd','str_cd','nama_event');
-	var $order = array('id_evt' => 'desc');
+	var $order = array('id_evt,str_cd' => 'desc');
 
 
 	public function get_list_kategori(){
@@ -131,6 +131,11 @@ class Event_m extends CI_Model {
 		$this->db->update('tevent', $data, $where);
         return $this->db->affected_rows();
 
+	}
+
+	public function delete_by_id($id){
+		 $this->db->where('id_evt', $id);
+       	 $this->db->delete('tevent');
 	}
 
 

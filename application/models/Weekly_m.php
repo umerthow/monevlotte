@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Weekly_m extends CI_Model {
 
 	var $table = 'price_compare_view';
-    var $column_order = array('id_prod','str_nm','l1_cd','l1_nm','prod_cd','prod_nm','str_cd','sale_qty','sale_amt','profit','stk_qty','stk_camt',
+    var $column_order = array('noid_prc','str_nm','l1_cd','l1_nm','prod_cd','prod_nm','str_cd','sale_qty','sale_amt','profit','stk_qty','stk_camt',
                                 'stk_samt','buy_prc','sale_prc','rt','scm1','dis1','prc1','scm2','dis2','prc2','scm3','dis3',
                                 'prc3','limit','ea','uom','harga_termurah','prc_reg','prc_lv_1','prc_lv_2','prc_lv_3','qty_low','prc_low','index1',
                                 'prc_point','index2','coment','status'); //set column field database for datatable orderable
@@ -14,6 +14,18 @@ class Weekly_m extends CI_Model {
     var $order = array('prod_cd,str_cd' => 'desc');
 
 	 private function _get_datatables_weeks_query() {
+
+        if($this->input->post('tahun_periode')){
+         $this->db->where('tahun', $this->input->post('tahun_periode'));   
+        }
+
+        if($this->input->post('bulan_periode')){
+         $this->db->where('bulan', $this->input->post('bulan_periode'));   
+        }
+
+        if($this->input->post('periode_minggu')){
+         $this->db->where('periode_minggu', $this->input->post('periode_minggu'));   
+        }
 
         if($this->input->post('filter_store'))
         {
@@ -142,10 +154,55 @@ class Weekly_m extends CI_Model {
 
     public function get_by_prod_cd($id){
          $this->db->from($this->table);
-         $this->db->where('id_prod',$id);
+         $this->db->where('noid_prc',$id);
          $query = $this->db->get();
      
          return $query->row();
+    }
+
+
+    public function import_pricecekk($priceData){
+
+        try {
+              $this->db->trans_begin();
+                foreach ($priceData as $row) {
+                $options = array(
+                    'tahun' => $row['tahun'],
+                    'bulan' => $row['bulan'],
+                    'periode' => $row['periode'],
+                    'prod_cd' => $row["prod_cd"],
+                    'str_cd' => $row["str_cd"],
+
+                    );
+                $Q = $this->db->get_where('price_compare', $options, 1);
+                if ($Q->num_rows() > 0) {
+                    $previousData = $Q->result();
+                    foreach ($previousData as $data) {
+                        $this->db->update('price_compare', $row, array('noid_prc' => $data->noid_prc));
+                    }
+                } else {
+                    $this->db->insert('price_compare', $row);
+                }
+            }
+
+            if (($this->db->trans_status() == false)) {
+                $this->db->trans_rollback();
+                $result = false;
+            } else {
+                $this->db->trans_commit();
+                $result = true;
+            }
+
+
+
+            }catch (Exception $exc) {
+                $this->db->trans_rollback();
+                $result = false;
+            }
+            $this->db->trans_complete();
+
+            return true;
+
     }
 }
 

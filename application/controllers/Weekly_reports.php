@@ -54,7 +54,7 @@ public function __construct(){
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $reports->id_prod;
+            $row[] = $reports->noid_prc;
             $row[] = $reports->str_nm;
            
             $row[] = $reports->l1_nm;
@@ -132,12 +132,12 @@ public function __construct(){
 
 
       $this->db->from("price_compare");
-      $this->db->where("id_prod", $id_prod);
+      $this->db->where("noid_prc", $id_prod);
       $count = $this->db->get()->num_rows();
 
        $data = array(
 
-        'id_prod' =>$this->input->post('prod_cd'),
+        'noid_prc' =>$this->input->post('prod_cd'),
         'prod_cd' =>$this->input->post('prod_x'),
          'str_cd' => $this->input->post('str_cd'),
          'str_name' => $this->input->post('str_name'),
@@ -157,13 +157,13 @@ public function __construct(){
 
           if($count>0){
 
-               $updatenya = $this->weekly_m->update_pricecek(array('id_prod' => $this->input->post('prod_cd')), $data) ;
+               $updatenya = $this->weekly_m->update_pricecek(array('noid_prc' => $this->input->post('prod_cd')), $data) ;
                 if($updatenya){
                      $status = array("STATUS"=>"true"); 
                      echo json_encode ($status);
                   } else {
                      $status = array("STATUS"=>"false"); 
-                     echo json_encode ($status) ;
+                     echo json_encode ($status);
                   }
 
          } else {
@@ -226,6 +226,86 @@ public function __construct(){
    public function cek_ajaxnya(){
 
    }
+
+
+   public function pricecek_upload(){
+   date_default_timezone_set('Asia/Jakarta');      //Don't forget this..I had used this..just didn't mention it in the post
+   $datetime_variable = new DateTime();
+   $datetime_formatted = date_format($datetime_variable, 'Y-m-d H:i:s');
+   $tahun = $this->input->post('tahun');
+   $bulan = $this->input->post('bulan');
+   $periode = $this->input->post('periode');
+   $config['upload_path'] = './temp_file/';
+   $config['allowed_types'] = 'xls|xlsx';
+   $config['max_size'] = '5000';//2mb
+   $config['file_name'] = 'template_pc.xls';
+   $config['overwrite'] = true;
+   $this->load->library('upload', $config);
+   $this->upload->initialize($config);
+   $this->load->library('excel');
+
+   if(!empty ($_FILES['filepricecek']['name'])){
+
+     if($this->upload->do_upload('filepricecek'))
+          {
+
+             $inputFileName = './temp_file/template_pc.xls';
+             $objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
+             $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+             if(!empty($sheetData)){
+                   $priceData = array();
+                    foreach ($sheetData as $rowNo => $row) {
+                       if($rowNo == 1) continue;
+                          $temp = array(
+                        'tahun'    => $tahun,
+                        'bulan'    => $bulan,
+                        'periode'  => $periode,
+                        'id_prod'  => ($row["B"].$row["C"]),
+                        'prod_cd'  => $row["B"],
+                        'str_cd'   => $this->session->userdata('str_code'),
+                        'prc_reg'  => $row["D"],
+                        'prc_lv_1' => $row["E"],
+                        'prc_lv_2' => $row["F"],
+                        'prc_lv_3' => $row["G"],
+                        'qty_low'  => $row["H"],
+                        'prc_low'  => $row["I"],
+                        'prc_point' => $row["J"],
+                        'createdBy' =>$this->session->userdata('username'),
+                        'updatedBy' => $this->session->userdata('username'),
+                        'updateDate' =>$datetime_formatted,
+                        'status'    =>1
+                      );      
+                    
+                     $priceData[] = $temp;
+                    }
+
+                     $updatenya = $this->weekly_m->import_pricecekk($priceData) ;
+               
+                      $status = array("STATUS"=>"true"); 
+                      echo json_encode ($status);
+          }
+              else {
+
+              $status = array("STATUS"=>"ytryrty"); 
+              echo json_encode ($status) ;
+
+          }
+
+
+      } else {
+
+             $status = array("STATUS"=>"false"); 
+              echo json_encode ($status) ;
+
+          }
+   
+   } else {
+
+    $status = array("STATUS"=>"false"); 
+     echo json_encode ($status) ;
+   }
+
+ }
 
 
    public function uploadpricecek(){

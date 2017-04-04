@@ -56,9 +56,17 @@ class Event extends CI_Controller {
 
         $prod_cd = $this->input->post('prod_cd');
         $prod_cat =  $this->input->post('prod_cat');
+        $price_ref = $this->input->post('ref_price');
 
-        $data =  $this->event_m->get_store_loc($prod_cd,$prod_cat);
-        echo json_encode ($data);
+        $data['prod_name'] = $this->event_m->get_store_loc_prod($prod_cd,$prod_cat);
+        $data['ref_price'] = $price_ref;
+
+         $data['storenya'] =  $this->event_m->get_store_loc($prod_cd,$prod_cat);
+
+       
+        $this->load->view('events/formtable_evt',$data);
+      
+
 
 
     }
@@ -72,69 +80,52 @@ class Event extends CI_Controller {
         $event_start = $this->input->post('event_start');
         $event_end = $this->input->post('event_end');
         $description = $this->input->post('description');
-
-
-
-        $data = array (
-            'str_cd' => $str_cd,
-             'prod_cd' => $prod_cd,
-             'nama_event' => $ev_name,
-             'detail_event' => $description,
-             'start_date' => $event_start,
-             'finish_date' => $event_end
-
-            );
-
-       
+        
 
        $count = count($_POST['options']);
       
-       for($i =1; $i<=$count;$i++) {
+       // for($i =1; $i<=$count;$i++) {
        
-         echo $this->input->post('str_cd[]');
+       //   echo $this->input->post('str_cd[]');
 
-         echo '<br/>';
+       //   echo '<br/>';
 
-          $data = array (
-            'id_prod' => ($this->input->post('str_cd[]').$prod_cd),
-            'str_cd' => $this->input->post('str_cd[]'),
-             'prod_cd' => $prod_cd,
+       //    $data = array (
+       //      'id_prod' => ($this->input->post('str_cd['.$i.']').$prod_cd),
+       //      'str_cd' => $this->input->post('str_cd['.$i.']'),
+       //      'event_prc' => $this->input->post('prc_event['.$i.']'),
+       //       'prod_cd' => $prod_cd,
+       //       'nama_event' => $ev_name,
+       //       'detail_event' => $description,
+       //       'start_date' => $event_start,
+       //       'finish_date' => $event_end
+
+       //      );
+
+       //     $this->db->insert('tevent', $data);
+
+       //  }
+
+
+       if(!empty ($_POST['options'])) {
+         foreach ($_POST['options'] as $key) {
+
+            
+          $data = array_merge($key, array('prod_cd' => $prod_cd,
              'nama_event' => $ev_name,
              'detail_event' => $description,
              'start_date' => $event_start,
-             'finish_date' => $event_end
-
-            );
-
-       //    $this->db->insert('tevent', $data);
-
-        }
-
-        foreach ($_POST['options'] as $key => $value) {
-
-            $data = array (
-            'id_prod' => (($value['str_cd']).$prod_cd),
-            'str_cd' => $value['str_cd'],
-             'prod_cd' => $prod_cd,
-             'nama_event' => $ev_name,
-             'detail_event' => $description,
-             'start_date' => $event_start,
-             'finish_date' => $event_end
-
-            );
-
+             'finish_date' => $event_end));
 
             $inserto = $this->db->insert('tevent', $data);
 
 
-        }
+         }
 
-
+     }
     if($inserto) {
         $this->session->set_flashdata('berhasil','Event berhasil ditambahkan. '); // $this->panel_user_m->input_evaluasi_3($data);
         redirect('Event/all_event');
-        // echo "berhasil";
-
     } else {
          $this->session->set_flashdata('error','Event Gagal ditambahkan! '); // $this->panel_user_m->input_evaluasi_3($data);
          redirect('Event/all_event');
@@ -160,8 +151,15 @@ public function ajax_list_all_events(){
             $row[] = $reports->prod_cd;
             $row[] = $reports->prod_nm;
             $row[] = $reports->ven_cd;
+
+            $row[] = $reports->buy_prc;
+            $row[] = $reports->std_buy_prc;
+            $row[] = $reports->sale_prc;
+            $row[] = $reports->curr_sale_prc;
+            $row[] = $reports->sale_stk_qty;
             $row[] = $reports->str_cd;
             $row[] = $reports->nama_event;
+            $row[] = $reports->event_prc;
             $row[] = $reports->detail_event;
             $row[] = $reports->start_date;
             $row[] = $reports->finish_date;
@@ -179,6 +177,49 @@ public function ajax_list_all_events(){
 
 
 }
+
+public function ajax_list_event_baru(){
+
+     $list = $this->event_m->get_datatables_events();
+     $data = array();
+     $no = $_POST['start'];
+
+     foreach ($list as $reports) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $reports->id_evt;
+            $row[] = $reports->prod_cd;
+            $row[] = $reports->prod_nm;
+            $row[] = $reports->ven_cd;
+
+            $row[] = $reports->buy_prc;
+            $row[] = $reports->std_buy_prc;
+            $row[] = $reports->sale_prc;
+            $row[] = $reports->curr_sale_prc;
+            $row[] = $reports->sale_stk_qty;
+            $row[] = $reports->str_cd;
+             $row[] = $reports->event_prc;
+            $data[] = $row;
+        }
+
+                $output = array(
+                        "draw" => $_POST['draw'],
+                        "recordsTotal" => $this->event_m->count_all(),
+                        "recordsFiltered" => $this->event_m->count_filtered(),
+                        "data" => $data,
+                );
+
+      echo json_encode($output);           
+
+
+}
+
+
+
+
+
+
 
 
 public function edit_event($id){
@@ -207,7 +248,7 @@ public function proc_updateevent(){
     $str_cd = $this->input->post('str_cd');
 
     $data = array(
-
+        'event_prc' => $this->input->post('prod_ev_prc'),
         'nama_event' =>  $this->input->post('ev_name'),
         'start_date' =>  $this->input->post('event_start'),
         'finish_date' =>  $this->input->post('event_end'),

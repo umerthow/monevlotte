@@ -1,4 +1,3 @@
-
 <div class="page-title">
     
 <div id="example_wrapper"></div>
@@ -86,9 +85,17 @@
                           <th class="info text-center" rowspan="2">id_ev</th>
                           <th class="info text-center" rowspan="2">Prod cd</th>
                           <th class="info text-center" rowspan="2">Prod nm</th>
-                              <th class="info text-center" rowspan="2">Vendor cd</th>
-                          <th class="info text-center " rowspan="2">Store cd</th>
-                          <th class="info text-center" rowspan="2">Event promo</th>
+                          <th class="info text-center" rowspan="2">Vendor cd</th>
+
+                           <th class="info text-center" rowspan="2">Buy Price</th>
+                           <th class="info text-center" rowspan="2">Buy Inc Prc</th>
+                            <th class="info text-center" rowspan="2">Sale Prc</th>
+                           <th class="info text-center" rowspan="2">Cur Sale Prc</th>
+                            <th class="info text-center" rowspan="2">Stok Qty</th>
+
+                           <th class="info text-center " rowspan="2">Store cd</th>
+                           <th class="info text-center" rowspan="2">Event promo</th>
+                           <th class="info text-center" rowspan="2">Event price</th>
                            <th class="info text-center" rowspan="2">Event Detail</th>
                            <th class="info text-center" colspan="2">Periode</th>
                     </tr>
@@ -143,6 +150,12 @@
                                   </div>
                                  </div>
 
+                                  <div class="form-group">
+                                  <label class="control-label col-md-3">Prod Evn Prc *</label>
+                                   <div class="col-md-9 col-sm-9 col-xs-12">
+                                   <input type="number" id="prod_ev_prc" name="prod_ev_prc" required="required" class="form-control col-md-7 col-xs-12">
+                                   </div>
+                                 </div>
 
                                  <div class="form-group">
                                   <label class="control-label col-md-3">Event name *</label>
@@ -233,11 +246,23 @@ table = $('#table_event').DataTable({
  "aLengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],  
   scrollY:        "400px",
   scrollX:        true,
-   
+
+  dom: 'Bfrtip',
+  buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                 columns: ':contains("Office")'
+                }
+            },
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ], 
    "columnDefs": [
 
             {
-                "targets": [ 1 ],
+                "targets": [ 1,4 ],
                 "visible": false
             },
             {
@@ -300,6 +325,7 @@ $('#table_event tbody').on('dblclick', 'tr', function () {
                   $('#ev_name').val(data.nama_event);
                   $('#prod_x').val(data.prod_cd);
                   $('#str_cd').val(data.str_cd);
+                  $('#prod_ev_prc').val(data.event_prc);
                   $('#event_start').val(data.start_date);
                   $("#event_end").val(data.finish_date);
                   $("#detail_evt").val(data.detail_event);

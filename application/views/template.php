@@ -141,7 +141,7 @@
     <body class="nav-md ">
         <div class="container body ">
             <div class="main_container">
-                <div class="col-md-3 left_col">
+                <div class="col-md-3 left_col menu_fixed">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
                             <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>LOTTE LSI</span></a>
@@ -217,11 +217,22 @@
                                         </li>
                                     </ul>
                                 </li> -->
+
+                                <?php if ($this->session->userdata('level') == '1' || $this->session->userdata('level') == '2' ) {  ?>   
                                  <li><a><i class="fa fa-edit"></i> Event <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('event/all_event', 'Semua Event'); ?> </li>
                                         <li><?php echo anchor('event/create_event', 'Buat Event'); ?> </li>
                                         
+                                    </ul>
+                                </li>
+
+                                <?php } ?>
+                                <li><a><i class="fa fa-globe"></i> Customer Maping <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><?php echo anchor('geolocation/show_all', 'Lokasi'); ?> </li>
+                                        <li><?php echo anchor('geolocation/location', 'Test Maps'); ?> </li>
+                                         <li><?php echo anchor('geolocation/white_spot', 'White Spot'); ?> </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>

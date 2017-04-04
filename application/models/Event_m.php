@@ -5,35 +5,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Event_m extends CI_Model {
 
 	var $table = 'tview_events';
-	var $column_order = array('id_evt','11_cd','prod_cd','prod_nm','ven_cd','str_cd','nama_event','detail_event','start_date','finish_date'); //set column field database for datatable orderable
+	var $column_order = array('id_evt','11_cd','prod_cd','prod_nm','ven_cd','buy_prc','sale_prc','curr_sale_prc','book_stk_qty','str_cd','nama_event','event_prc','detail_event','start_date','finish_date'); //set column field database for datatable orderable
 	var $column_search = array('prod_cd','prod_nm','ven_cd','str_cd','nama_event');
 	var $order = array('id_evt,str_cd' => 'desc');
 
 
 	public function get_list_kategori(){
 
-		 $this->db->select('product.str_cd,store.str_nm,product.l1_cd,product.l1_nm');
-       	 $this->db->from('product');
-       	 $this->db->join('store','store.str_cd = product.str_cd');
-       	 $this->db->order_by('product.l1_nm','asc');
-       	 $query = $this->db->get();
+		 // $this->db->select('product.str_cd,store.str_nm,product.l1_cd,product.l1_nm');
+   //     	 $this->db->from('product');
+   //     	 $this->db->join('store','store.str_cd = product.str_cd');
+   //     	 $this->db->order_by('product.l1_nm','asc');
+   //     	 $query = $this->db->get();
+   //       $result = $query->result();
+
+         $this->db->select('str_cd,str_nm,l1_cd,l1_nm');
+         $this->db->from('price_compare_view');
+         $this->db->group_by('l1_cd');
+         $this->db->order_by('l1_nm','asc');
+         $query = $this->db->get();
          $result = $query->result();
  
-        
+        $this->db->close();
+
         return $result;
 	}
 
 
 	public function get_store_loc($prod_cd,$prod_cat){
 
-		$this->db->select('product.str_cd,store.str_nm,product.l1_cd,product.l1_nm');
+		$this->db->select('product.prod_cd,product.str_cd,product.buy_prc,product.std_buy_prc,product.sale_prc,product.curr_sale_prc,product.sale_stk_qty,product.l1_cd,product.l1_nm,product.book_stk_qty');
        	 $this->db->from('product');
-       	 $this->db->join('store','store.str_cd = product.str_cd');
 		$this->db->where('product.prod_cd', $prod_cd);
 		$this->db->where('product.l1_cd', $prod_cat);
 		return $this->db->get_where()->result();
  
 	}
+
+    public function get_store_loc_prod($prod_cd,$prod_cat){
+        $this->db->select('product.prod_nm');
+         $this->db->from('product');
+        $this->db->where('product.prod_cd', $prod_cd);
+        $this->db->where('product.l1_cd', $prod_cat);
+        return $this->db->get_where()->row();
+    }
 
 	//datatables model here
 
@@ -118,7 +133,12 @@ class Event_m extends CI_Model {
          if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
+
+           
+
         return $query->result();
+          $query->free_result();
+             $this->db->close(); 
 
 	} 
 

@@ -1,3 +1,9 @@
+<style type="text/css">
+  .checkbox {
+  position: relative;
+  top: -1px;
+}
+</style>
 <h1></h1>
 
 <div class="">
@@ -31,7 +37,52 @@
 
                   <div class="x_content">
                    
-                     <form action="<?php echo site_url('event/insert_evt')?>" method="post" class="form-horizontal" novalidate>
+                     <form action="<?php echo site_url('event/insert_evt')?>" method="post" class="form-horizontal" id ="demo-form" novalidate>
+
+                   <div class="row">
+                      <div class="item form-group col-md-6">
+                         <label  for="event">Nama Event  <span class="required">*</span> </label>
+
+                       <input type="text" id="ev_name" name="ev_name" required="required" class="form-control col-md-7 col-xs-12">
+                      </div>
+                  </div>
+
+                  <div class="row">
+                  <div class="item form-group col-md-6">
+                      <label for="email">Start event <span class="required">*</span></label>
+
+                          
+                          <div class="input-group date form_date form_date col-md-6 " data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                    <input class="form-control" size="8"  name="event_start" type="text" readonly >
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                         </div>
+                        
+                       
+
+
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label for="email">End event <span class="required">*</span></label>
+
+                          
+                          <div class="input-group date form_date form_date col-md-6 " data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                     <input class="form-control" size="8"  name="event_end" type="text" readonly >
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                         </div>
+                        
+                       
+
+
+                  </div>
+
+
+
+
+                  </div>
 
                     <div class="row">
                       <div class="form-group col-md-3">
@@ -41,96 +92,126 @@
 
                       <div class="form-group col-md-3">
                         <label for="kode">Product Code*   </label>
-                        <input type="text" name="prod_cd"  id="prod_cd" class="form-control" value=""  placeholder="" required />
+                        <input type="text" name="prod_cd"  id="prod_cd" class="form-control bs-callout-warning" value=""  placeholder=""  required="required" data-validate-length-range="4"/>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="kode">Price referens*   </label>
+                        <input type="number" name="price_ref"  id="price_ref" class="form-control" value=""  placeholder="" required />
                       </div>
 
                      <div class="form-group col-md-3">
-                          <button id="pilihprodkat" type="button" class="btn btn-success" style="margin-top:23px;">Pilih</button>
+                          <button id="pilihprodkat" type="button" class="btn btn-success" style="margin-top:23px;"><a href="#event_info">Cari</a></button>
                      </div>
                     
 
+
+                
+                      
+
                   </div>
+
+
                  
+                
 
 
 
-                      <p id="demo2"></p>
+                      <p id="demo2"><!--  <table class="table table-bordered nowrap table-hover gridtable" id="table_event" style="font-size:12px;margin-top: 10px; border:"2px" " framework="bootstrap">
+
+                  <thead>
+                     <tr>
+                          <th bgcolor="#FFFFFF"  class=" info text-center" rowspan="2">#</th>
+                          <th class="info text-center" rowspan="2">id_ev</th>
+                          <th class="info text-center" rowspan="2">Prod cd</th>
+                          <th class="info text-center" rowspan="2">Prod nm</th>
+                          <th class="info text-center" rowspan="2">Vendor cd</th>
+
+                           <th class="info text-center" rowspan="2">Buy Price</th>
+                           <th class="info text-center" rowspan="2">Buy Inc Prc</th>
+                            <th class="info text-center" rowspan="2">Sale Prc</th>
+                           <th class="info text-center" rowspan="2">Cur Sale Prc</th>
+                            <th class="info text-center" rowspan="2">Stok Qty</th>
+
+                           <th class="info text-center " rowspan="2">Store cd</th>
+                           <th class="info text-center" rowspan="2">Event promo</th>
+                           <th class="info text-center" rowspan="2">Event price</th>
+                           <th class="info text-center" rowspan="2">Event Detail</th>
+                           <th class="info text-center" colspan="2">Periode</th>
+                    </tr>
+                    <tr>
+                          <th class="info text-center">Start</th>
+                          <th class="info text-center">Finish</th>
+                      </tr>
+                  </thead>
+                   <tbody></tbody> 
+
+
+                  </table> --></p>
                       <div id="event_info" class="hidden"> 
-                      <span class="section">Event  Info</span>
+                      <span class="section">Info Store Price </span>
+                     
+                     <div class="form-group" id="test">
 
+                     <div class="row">
+                     
+
+
+                         
+
+                           <div class="item form-group">
+                       
+                        <div class="col-md-10 col-sm-10">
+                        <div class="form-group">
+                            
+                             
+
+                             <div id="storeshow">
+
+
+
+                             </div>
+                     
+
+                        </div>
+                           
+                        </div>
+                        
+                        </div>
+
+
+                     </div>
+                     </div>
                     
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Nama Event <span class="required">*</span>
+                    <!--   <div class="item form-group">
+                        <label class="control-label col-md-2 col-sm-2 " for="email">Nama Event 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12">
                           <input type="text" id="ev_name" name="ev_name" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
-                      </div>
+                      </div> -->
 
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Store Location*</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                             <p style="padding: 5px;">
-                            <div id="storeshow">
-                                 <input type="checkbox" name="hobbies[]" id="hobby2" value="run" class="flat" /> Running
-                        <br />
-
-                               <input type="checkbox" name="hobbies[]" id="sdfg" value="run" class="flat" /> Running
-                             <br />
-
-                            </div>
-                            </p>
-                        </div>
-                        </div>
-                      </div>
-
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Start event <span class="required">*</span>
-                        </label>
-                          <div class="col-md-6">
-                          <div class="control-group">
-                          <div class="input-group date form_date form_date col-md-6 " data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                    <input class="form-control" size="8"  name="event_start" type="text" readonly >
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                         </div>
-                         </div>
-                         <input type="hidden" id="dtp_input2" value="" /><br/>
-                         </div>
+                    
+                    
+                      
+                  
+                    
                        
 
-                        </div>
 
                
 
-                        <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-4" for="email">End event <span class="required">*</span>
-                        </label>
                        
-                          <div class="col-md-6">
-                          <div class="control-group">
-                          <div class="input-group date form_date form_date col-md-6 " data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                    <input class="form-control" size="8"  name="event_end" type="text" readonly >
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                         </div>
-                         </div>
-                         <input type="hidden" id="dtp_input2" value="" /><br/>
-                         </div>
-
-                        
-
-                      
-                      </div>
                     
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Deskripsi Event <span class="required">*</span>
-                        </label>
+                      
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea id="textarea" required="required" name="description" class="form-control col-md-7 col-xs-12"></textarea>
+                        <div class="row">
+                          <textarea id="textarea" required="required" name="description" class="form-control col-md-7 col-xs-12" placeholder="Deskripsi event"></textarea>
+                        </div>
                         </div>
                       </div>
+                       <h2><small>NB : Mohon Cheklist Store yang kan di Berikan Event</small></h2>
                       <div class="ln_solid"></div>
                       <div class="form-group" id="tomb_submit" >
                         <div class="col-md-6 col-md-offset-3">
@@ -166,14 +247,14 @@ var storeshow = $('#storeshow');
     $('#demo2').show();
     var prod_cat =$('#filter_kategori').val();
     var prod_cd = $('#prod_cd').val();
+    var prc_ref = $('#price_ref').val();
     
 
     $.ajax({
 
       url :"<?php echo  base_url()?>/event/store_location/",     
-      data:{'prod_cd':prod_cd,'prod_cat':prod_cat },
+      data:{'prod_cd':prod_cd,'prod_cat':prod_cat,'ref_price': prc_ref},
       type: 'POST',
-      dataType:'json',
       cache: false,
       beforeSend: function(){
 
@@ -186,44 +267,16 @@ var storeshow = $('#storeshow');
    
 
       success: function(data){
-        try {  
-                if (data.length == 0) {
 
-                  alert('data product dan kategori tidak ditemukan!');
-                  $('#demo2').text('Mohon cek product code dan kategori.');
-                  $('#event_info').hide();
-                  return false;
 
-                } else {
-                 $('#event_info').removeAttr( "class" );
+        $('#event_info').removeAttr( "class" );
                  $('#event_info').show();
                  $('#demo2').hide();
                  $('#event_info').fadeIn('slow');
                  storeshow.text('');
                  var i = 1;
-                 $.each(data, function(key,value) {
-                     
-                     
 
-                          storeshow.append("<input type='checkbox' name='options[][str_cd]' id='str_cd' value="+ value.str_cd+" class='flat' style='padding:10px' />" + value.str_nm + "" );
-                     
-
-                       storeshow.append('<br/>');
-               });
-
-                }
-
-
-        }catch(e) { 
-
-          alert('Exception while request..');
-
-        }  
-
-
-       
-
-         
+                  storeshow.html(data);
 
       },
 
@@ -278,9 +331,65 @@ var storeshow = $('#storeshow');
     });
 
 
+
+
+</script>
+
+
+<script>
+var table ;
+
+table = $('#table_event').DataTable({
+  "processing": true, //Feature control the processing indicator.
+  "serverSide": true, //Feature control DataTables' server-side processing mode.
+  "order": [], //Initial no order.
+
+   "ajax": {
+            "url": "<?php echo site_url('event/ajax_list_all_events')?>",
+            "type": "POST",
+            "data":function (data){
+              data.filter_prod = $('#prod_cd').val();
+              data.filter_kategori = $('#filter_kategori').val();
+            }
+        },
+  
+ "pageLength": 15,
+ "aLengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],  
+  scrollY:        "200px",
+  scrollX:        true,
+   
+   "columnDefs": [
+
+            {
+                "targets": [ 1 ],
+                "visible": false
+            },
+            {
+               "targets": [ 0 ], //last column
+               "orderable": false, //set not orderable
+
+            },
+
+   ],
+
+  "sScrollX": true,
+  "sScrollXInner": "160%",
+  fixedColumns:   {
+            leftColumns: 3
+        }
+
+  });
+
+  $('#pilihprodkat').click(function(){ //button filter event click
+        table.ajax.reload(null,false);  //just reload table
+    })
+
+</script>
+
+<script>
+
 function reload_table()
 {
     table.ajax.reload(null,false); //reload datatable ajax 
 }
-
 </script>

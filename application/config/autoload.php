@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('Template','database','session','form_validation','pagination','upload','email','encrypt');
+$autoload['libraries'] = array('Template','database','session','form_validation','pagination','upload','email','encrypt','googlemaps');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','form','date','download');
+$autoload['helper'] = array('url','form','date','download','tanggal');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('user_m','weekly_m','event_m');
+$autoload['model'] = array('user_m','weekly_m','event_m','geolocation_m','sales_m');

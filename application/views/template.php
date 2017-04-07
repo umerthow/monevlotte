@@ -99,11 +99,12 @@
         <script src="<?php echo base_url(); ?>gentelella/vendors/bootstrap-daterangepicker/bootstrap-datetimepicker.js"></script>
 
 
-
         <!-- Custom Theme Scripts -->
         <!-- <script src="<?php echo base_url(); ?>gentelella/production/js/custom.js"></script> -->
          <script src="<?php echo base_url(); ?>gentelella/vendors/validator/validator.js"></script>
 
+         <!-- jquery smart wizard -->
+          <script src="<?php echo base_url(); ?>gentelella/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 
 
     <!-- Custom Theme Scripts -->
@@ -141,7 +142,7 @@
     <body class="nav-md ">
         <div class="container body ">
             <div class="main_container">
-                <div class="col-md-3 left_col menu_fixed">
+                <div class="col-md-3 left_col ">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
                             <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>LOTTE LSI</span></a>
@@ -192,7 +193,7 @@
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('weekly_reports/index', 'Price Cek'); ?> </li>
                                         <li><?php echo anchor('welcome/form_advanced', 'Horeka Report'); ?> </li>
-                                        
+                                        <li><?php echo anchor('sales/index', 'Sales YTD'); ?> </li>
                                     </ul>
                                 </li>
                                 <!-- <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
@@ -232,7 +233,16 @@
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('geolocation/show_all', 'Lokasi'); ?> </li>
                                         <li><?php echo anchor('geolocation/location', 'Test Maps'); ?> </li>
-                                         <li><?php echo anchor('geolocation/white_spot', 'White Spot'); ?> </li>
+                                         <li><a>White Spot <span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li class="sub_menu"><?php echo anchor('geolocation/white_spot', 'White Spot Location'); ?>
+                                                    </li>
+                                                    <li><?php echo anchor('white_spot/transaction', 'Transaction'); ?>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </li>
+                                         <li> </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>

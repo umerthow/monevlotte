@@ -5,10 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Weekly_m extends CI_Model {
 
 	var $table = 'price_compare_view';
-    var $column_order = array('noid_prc','str_nm','l1_cd','l1_nm','prod_cd','prod_nm','str_cd','sale_qty','sale_amt','profit','stk_qty','stk_camt',
+    var $column_order = array('noid_prc','str_nm','l1_cd','l1_nm','prod_cd','prod_nm','str_cd','buy_incl','sale_qty','sale_amt','profit','stk_qty','stk_camt',
                                 'stk_samt','buy_prc','sale_prc','rt','scm1','dis1','prc1','scm2','dis2','prc2','scm3','dis3',
                                 'prc3','limit','ea','uom','harga_termurah','prc_reg','prc_lv_1','prc_lv_2','prc_lv_3','qty_low','prc_low','index1',
-                                'prc_point','index2','coment','status'); //set column field database for datatable orderable
+                                'prc_point','index2','harga_buyer','profit_buyer','coment','status'); //set column field database for datatable orderable
     
     var $column_search = array('str_cd','prod_cd','prod_nm','str_nm','l1_cd','l1_nm'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     var $order = array('prod_cd,str_cd' => 'desc');
@@ -202,6 +202,56 @@ class Weekly_m extends CI_Model {
             $this->db->trans_complete();
 
             return true;
+
+    }
+
+
+    public function get_QUERY_HRE(){
+
+         if($this->input->post('tahun')){
+         $this->db->where('tahun', $this->input->post('tahun'));   
+        }
+
+        if($this->input->post('bulan')){
+         $this->db->where('bulan', $this->input->post('bulan'));   
+        }
+
+        if($this->input->post('periode')){
+         $this->db->where('periode_minggu', $this->input->post('periode'));   
+        }
+
+        if($this->input->post('filter_store'))
+        {
+            $this->db->where('str_cd', $this->input->post('filter_store'));
+        }
+
+        if($this->input->post('filter_kategori'))
+        {
+            $this->db->where('l1_cd', $this->input->post('filter_kategori'));
+        }
+
+         $this->db->where('status', 2);
+
+         $this->db->from($this->table);
+    }
+
+
+    public function get_datatables_mailit(){
+
+         $data = array();       
+         $this->get_QUERY_HRE();
+
+             $Q = $this->db->get();
+            if($Q->num_rows() > 0){
+            foreach ($Q->result_array() as $row){
+            $data[] = $row;
+             }
+        }
+
+
+        $Q->free_result();
+         return $data;
+
 
     }
 }

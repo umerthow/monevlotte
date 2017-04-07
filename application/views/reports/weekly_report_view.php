@@ -1,5 +1,8 @@
 <style type="text/css">
 
+.big-checkbox {width: 15px; height: 15px;}
+
+
 .dropzone {
   margin-top: 100px;
   border: 2px dashed #0087F7;
@@ -207,8 +210,15 @@ $date = new DateTime();
                         <div class="col-md-6 col-sm-6 ">
                           <button type="button" class="btn btn-primary" id="btn-filter">Filter</button>
                           <button type="button" class="btn btn-info" id="btn-Reset"> Reset</button>
-                        
-                          <button type="button" class="btn btn-default pull-right"  onclick="reload_table()" ><span class="fa fa-refresh"></span> Reload Data</button>
+
+
+                            <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default"  onclick="reload_table()" ><span class="fa fa-refresh"></span> Reload Data</button>
+                            <button class="btn btn-info mail_to" type="button"><span class="fa fa-envelope-o"></span> to IT</button>
+                            <button class="btn btn-default" type="button">#</button>
+                          </div>
+
+                         
              
                           <div id="colvis"></div>
                           
@@ -233,7 +243,8 @@ $date = new DateTime();
                           <th class="info text-center " rowspan="2">L1_name</th>
                           <th class="info text-center" rowspan="2">Prod_cd</th>
                           <th class="info text-center" rowspan="2">Prod_nm</th>
-                         <th class="text-center" rowspan="2">Str cd</th>
+                          <th class="text-center" rowspan="2">Str cd</th>
+                          <th class="text-center" rowspan="2">Buy Incl</th>
                           <th class="info text-center"  rowspan="2">sale_qty</th>
                           <th class="info text-center" rowspan="2" >sale_amt</th>
                           <th class="info text-center"  rowspan="2">profit</th>
@@ -265,6 +276,8 @@ $date = new DateTime();
                           <th class="text-center" rowspan="2">Harga stl Point</th>
                           <th class="text-center" rowspan="2">Index 2</th>
                           <th class="text-center" rowspan="2">Status COMM DF</th>
+                          <th class="text-center" rowspan="2">Buyer Price</th>
+                          <th class="text-center" rowspan="2">Buyer Profit</th>
                     </tr>
                     <tr>
                         <th class="text-centertg-yw4l">Regular</th>
@@ -289,6 +302,8 @@ $date = new DateTime();
                 <div class="pull-right">
                 <i id="disini"></i>
                 </div>
+
+
 
 </div>
 
@@ -496,13 +511,32 @@ $date = new DateTime();
                               </div>
 
                               </div>
+                              <div id="formkomenetar">
+                                <div class="form-group">
+                                <label class="control-label col-md-3">Harga Buyer</label>
+                                 <div class="col-md-9 col-sm-9 col-xs-12">
+                                  <input type="number" id="buyer_prc" name="buyer_prc" class="form-control"  placeholder="Input here">
 
-                              <div class="form-group" id="formkomenetar">
-                              <label class="control-label col-md-3">Approval COMM DF</label>
-                               <div class="col-md-9 col-sm-9 col-xs-12">
-                                <textarea id="comment" name="comment" class="form-control"  placeholder="Input here" col="5" ></textarea>
+                                 </div>
+                                </div>
 
-                               </div>
+                                <div class="form-group">
+                                <label class="control-label col-md-3">Remarks COMM DF</label>
+                                 <div class="col-md-9 col-sm-9 col-xs-12">
+                                  <textarea id="comment" name="comment" class="form-control"  placeholder="Input here" col="5" ></textarea>
+
+                                 </div>
+                                </div>
+                                 <div class="form-group">
+                                  <label class="control-label col-md-3">Konfirmasi</label>
+                                 <div class="col-md-9 col-sm-9 col-xs-12">
+                                   
+
+                                      <input type="checkbox" id="konfirm" class="big-checkbox" value="2"> APPROVAL
+                                  
+                                  </div>
+                                </div>
+
                               </div>
                              </form>
                         </div>
@@ -517,7 +551,14 @@ $date = new DateTime();
 
 
 
+<script>
+ if($("#konfirm").is(':checked')){
+     $("#konfirm").val(2);
+} else {
+     $("#konfirm").val(0);
+}
 
+</script>
 
 <script>
 
@@ -683,7 +724,7 @@ table = $('#table1').DataTable({
 
 <script>
 $('#table1 tbody').on('dblclick', 'tr', function () {
-
+ 
         var data = table.row( this ).data();
         var prod_cd = data[1];
         //alert( 'You clicked on '+data[3]+'\'s row' );
@@ -715,18 +756,26 @@ $('#table1 tbody').on('dblclick', 'tr', function () {
     
       success: function(data){
 
-
        
         try{  
 
-          if(data.length == 0  ) {
+          if(data.STATUS == "nodata" ) {
 
-                alert('Error get data from ajax ');    
+               // alert('Error get data from ajax ');    
+                          PNotify.prototype.options.styling = "bootstrap3";
+                          new PNotify({
 
+                          title: 'Error',
+                          text: data.msg,
+                          type: 'error',
+                          stack: {"dir1":"down", "dir2":"right", "push":"top"},
+                          }); 
+
+                           $('.btn-process').attr('disabled',true);
 
           } else {
               
-              
+                   $('.btn-process').attr('disabled',false);
                   $('#str_cd').val(data.str_cd);
                   $('#prod_nm').val(data.prod_nm);
                   $('#prod_x').val(data.prod_cd);
@@ -739,6 +788,22 @@ $('#table1 tbody').on('dblclick', 'tr', function () {
                   $("#prc_lower").val(data.prc_low);
                   $("#prc_point").val(data.prc_point);
                   $("#comment").val(data.coment);
+                  $("#buyer_prc").val(data.harga_buyer);
+                  
+                   $("#konfirm").is(':checked') ? 2 : 0;
+
+                
+                  if(data.status == 2) {
+                    
+                   $('#konfirm').prop('checked', true);
+                  } else {
+
+                    $('#konfirm').prop('checked',false);
+                  }
+
+                 
+
+                  
           }
           
    
@@ -757,6 +822,7 @@ $('#table1 tbody').on('dblclick', 'tr', function () {
                     $("#prc_lower").val();
                     $("#prc_point").val();
                     $("#comment").val();
+                    $("#buyer_prc").val();
 
           
            alert('Error get data from ajax');
@@ -778,6 +844,8 @@ $('#table1 tbody').on('dblclick', 'tr', function () {
 
    
     } );
+
+
 
 </script>
 
@@ -803,12 +871,14 @@ $('#price_option').on('click', '.btn-process', function(e) {
            var prc_low_d =  $(".modal-body #prc_lower").val();
            var prc_point_d =  $(".modal-body #prc_point").val();
            var komentar = $(".modal-body #comment").val();
+           var harga_buyer = $(".modal-body #buyer_prc").val();
+           var konfirm = $(".modal-body #konfirm").is(':checked') ? 2 : 0;
         
 
 
             $.ajax({
                url: "<?php echo  base_url()?>/weekly_reports/insert_pricecek",
-               data :{'prod_cd': prod_cd1,'prod_x':prod_x,'str_cd':str_cd,'str_name':str_nm,'prc_reg':prc_reg_d,'prc_lv1' : prc_1,'prc_lv2': prc_2,'prc_lv3':prc_3,'qty_low':qty_low_d,'prc_low':prc_low_d,'prc_point':prc_point_d,'coment':komentar},
+               data :{'prod_cd': prod_cd1,'prod_x':prod_x,'str_cd':str_cd,'str_name':str_nm,'prc_reg':prc_reg_d,'prc_lv1' : prc_1,'prc_lv2': prc_2,'prc_lv3':prc_3,'qty_low':qty_low_d,'prc_low':prc_low_d,'prc_point':prc_point_d,'coment':komentar,'harga_buyer':harga_buyer,'konfirm':konfirm},
                type: "POST",
                cache: false,
 
@@ -1036,3 +1106,51 @@ $('.btn-upload').attr('disabled',true);
 });
 </script>
 
+<script>
+
+$(".mail_to").on('click',function(){ 
+var tahun = $('#tahun').val();
+var bulan_periode = $('#bulan').val();
+var periode_minggu = $('#periode').val();
+var filter_store = $('#filter_store').val();
+var filter_kategori = $('#filter_kategori').val();
+
+
+    $.ajax({
+
+      url :"<?php echo  base_url()?>/weekly_reports/mail_it/",
+      type: 'POST',
+      data : {'tahun': tahun,'bulan':bulan_periode,'minggu':periode_minggu,'filter_store':filter_store,'filter_kategori':filter_kategori},
+      beforeSend: function(){
+              $('.mail_to').text('Loading..');
+              $('.mail_to').attr('disabled',true);
+
+      },
+
+      success: function(data){
+              $('.mail_to').text('to IT');
+              $('.mail_to').attr('disabled',false);
+              
+              PNotify.prototype.options.styling = "bootstrap3";
+                     new PNotify({
+                      title: 'Successfully',
+                      text: 'Success Email ke IT.',
+                      type: 'success',
+                      stack: {"dir1":"down", "dir2":"right", "push":"top"},
+                    });
+       },
+
+
+      error: function (jqXHR, textStatus, errorThrown)
+       {
+         alert('Exeption while request..');
+         $('.mail_to').text('to IT');
+         $('.mail_to').attr('disabled',false);
+           return false;
+         }
+
+    });
+
+});
+
+</script>

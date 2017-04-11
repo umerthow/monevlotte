@@ -1,3 +1,4 @@
+  <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net/css/jquery.dataTables.css" rel="stylesheet">
 <style type="text/css">
 
 .big-checkbox {width: 15px; height: 15px;}

@@ -55,6 +55,7 @@ Class User extends CI_Controller {
          if ($user)
             {
                 $data_user = array(
+                    'id' => $user->noid,
                     'nama_lengkap' => $user->nama_lengkap,
                     'username' => $user->username,
                     'kode' => $user->code,
@@ -85,6 +86,7 @@ Class User extends CI_Controller {
     public function logout(){
 
         $data_user = array (
+              'id' ,
         'nama_lengkap',
         'username',
         'kode',

@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('user_m','weekly_m','event_m','geolocation_m','sales_m');
+$autoload['model'] = array('user_m','weekly_m','event_m','geolocation_m','sales_m','white_spot_m','ws_trans_m');

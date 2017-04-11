@@ -33,7 +33,7 @@
 
 
   <!-- Datatables -->
-    <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net/css/jquery.dataTables.css" rel="stylesheet">
+  
     <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>gentelella/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -112,6 +112,8 @@
 
 
        <!-- Datatables -->
+
+  
     <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>gentelella/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -194,6 +196,7 @@
                                         <li><?php echo anchor('weekly_reports/index', 'Price Cek'); ?> </li>
                                         <li><?php echo anchor('welcome/form_advanced', 'Horeka Report'); ?> </li>
                                         <li><?php echo anchor('sales/index', 'Sales YTD'); ?> </li>
+                                        <li><?php echo anchor('white_spot/rekap_transc', 'White Spot Report'); ?> </li>
                                     </ul>
                                 </li>
                                 <!-- <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
@@ -229,6 +232,8 @@
                                 </li>
 
                                 <?php } ?>
+
+
                                 <li><a><i class="fa fa-globe"></i> Customer Maping <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('geolocation/show_all', 'Lokasi'); ?> </li>
@@ -237,14 +242,18 @@
                                                 <ul class="nav child_menu">
                                                     <li class="sub_menu"><?php echo anchor('geolocation/white_spot', 'White Spot Location'); ?>
                                                     </li>
-                                                    <li><?php echo anchor('white_spot/transaction', 'Transaction'); ?>
+                                  <?php if ($this->session->userdata('level') == '1' || $this->session->userdata('level') == '3' ) {  ?>                      
+                                                    <li class="sub_menu"><?php echo anchor('white_spot/transaction', 'Transaction'); ?>
                                                     </li>
-                                                   
+                                            <?php } ?>   
+                                                      <li class="sub_menu"><?php echo anchor('white_spot/event_white_spot', 'Event White Spot'); ?>   
                                                 </ul>
                                             </li>
                                          <li> </li>
                                     </ul>
                                 </li>
+
+
                                 <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><?php echo anchor('welcome/table', 'Table'); ?> </li>
